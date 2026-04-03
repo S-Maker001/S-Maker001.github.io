@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlyNote | Elevate Your Learning</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+
+        :root {
+            --bg-color: #0B0E14;
+            --surface-color: rgba(255, 255, 255, 0.03);
+            --primary-gradient: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            --text-main: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(255, 107, 107, 0.15), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(132, 94, 255, 0.15), transparent 25%);
+        }
+
+        /* Nav */
+        header {
+            padding: 24px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            background: rgba(11, 14, 20, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
+        }
+
+        /* Hero */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 120px 5% 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-content {
+            animation: slideInLeft 1s ease-out forwards;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--surface-color);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            color: #FF8E53;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(4px);
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .highlight {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Image Showcase */
+        .hero-image-wrapper {
+            position: relative;
+            animation: slideInRight 1s ease-out forwards;
+            opacity: 0;
+            transform: translateX(30px);
+            perspective: 1000px;
+        }
+
+        .image-glass-container {
+            background: var(--surface-color);
+            border: 1px solid var(--glass-border);
+            padding: 1rem;
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            transform: rotateY(-5deg) rotateX(5deg);
+            transition: transform 0.5s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .image-glass-container:hover {
+            transform: rotateY(0deg) rotateX(0deg) translateY(-10px);
+        }
+
+        .image-glass-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            display: block;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .el-1 {
+            top: -20px;
+            right: -20px;
+            animation-delay: 0s;
+        }
+
+        .el-2 {
+            bottom: 30px;
+            left: -40px;
+            animation-delay: -3s;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+        }
+
+        .tag-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tag-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .tag-sub {
+            color: #4ADE80;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .image-glass-container {
+                transform: none;
+            }
+
+            .floating-element {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#gradient)" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#FF6B6B" />
+                        <stop offset="100%" stop-color="#FF8E53" />
+                    </linearGradient>
+                </defs>
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+            </svg>
+            Fly<span class="logo-icon">Note</span>
+        </div>
+
+    </header>
+
+    <main>
+        <div class="hero-grid">
+            <div class="hero-content">
+                <div class="badge">🚀 The New Way to Study</div>
+                <h1>Buy & Sell <br> <span class="highlight">Aesthetic Notes</span></h1>
+                <p>
+                    FlyNote is an app where students can sell their notes. Buy notes from other students to enhance your
+                    learning, and gain multiple perspectives on any topic flawlessly.
+                </p>
+
+            </div>
+
+            <div class="hero-image-wrapper">
+                <div class="floating-element el-1">
+                    <div class="avatar" style="background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%);"></div>
+                    <div class="tag-text">
+                        <span class="tag-title">Biology 101</span>
+                        <span class="tag-sub">+$24.00 Earned</span>
+                    </div>
+                </div>
+
+                <div class="floating-element el-2">
+                    <div class="avatar" style="background: linear-gradient(135deg, #84FAB0 0%, #8FD3F4 100%);"></div>
+                    <div class="tag-text">
+                        <span class="tag-title">Sarah bought notes</span>
+                        <span style="color:var(--text-secondary); font-size:0.8rem;">Just now</span>
+                    </div>
+                </div>
+
+                <div class="image-glass-container">
+                    <img src="https://external-preview.redd.it/how-to-take-aesthetic-digital-notes-v0-zWL2HyQIv0N53DT6F78xsPeAqYXEwpz3uYOo4J0pkRM.png?format=pjpg&auto=webp&s=b86b264e3ab854f49c8cc5cbad33076e0a58a89b"
+                        alt="Aesthetic Notes App Showcase">
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+</html>
